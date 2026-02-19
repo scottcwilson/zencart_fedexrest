@@ -264,10 +264,11 @@
          if (curl_errno($ch) !== 0) {
             $this->debugLog('Error from cURL: ' . sprintf('Error [%d]: %s', curl_errno($ch), curl_error($ch)));
             echo 'Error from cURL: ' . sprintf('Error [%d]: %s', curl_errno($ch), curl_error($ch));
-            curl_close($ch);
+            $this->closeCurl($ch);
             return false;  
          }
-         curl_close($ch);
+
+         $this->closeCurl($ch);
 
          $arr_response = json_decode($response, true);
          $this->debugLog("Auth Response: " . print_r($arr_response, true));
@@ -478,7 +479,7 @@
             $this->debugLog('Error from cURL: ' . sprintf('Error [%d]: %s', curl_errno($ch), curl_error($ch)));
             echo 'Error from cURL: ' . sprintf('Error [%d]: %s', curl_errno($ch), curl_error($ch));
          }
-         curl_close($ch);
+         $this->closeCurl($ch);
 
          $arr_response = json_decode($response, true);
          $this->debugLog("Rate Response: " . print_r($arr_response, true));
@@ -704,6 +705,15 @@
          if ($this->debug === true) {
             $spacer = ($include_spacer === false) ? '' : "------------------------------------------\n";
             error_log($spacer . date('Y-m-d H:i:s') . ': ' . $message . PHP_EOL, 3, $this->logfile);
+         }
+      }
+
+      private function closeCurl($ch): void
+      {
+         // curl_close is deprecated in PHP 8.5
+         // in 8.0 it is a no-operation (NOP) function.
+         if (PHP_VERSION_ID < 80000) {
+               curl_close($ch);
          }
       }
    }
