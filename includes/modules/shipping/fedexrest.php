@@ -6,7 +6,7 @@
 // Portions Copyright 2003 osCommerce
 // Portions Copyright 2003-2023 Zen Cart Development Team
 // Portions Copyright Vinos de Frutas Tropicales
-// Copyright 2023 That Software Guy 
+// Copyright 2023-2026 That Software Guy 
 // Additional documentation: 
 // https://github.com/scottcwilson/zencart_fedexrest
 
@@ -202,9 +202,9 @@
             $this->types['FEDEX_2_DAY'] = array('icon' => '', 'handling_fee' => MODULE_SHIPPING_FEDEX_REST_EXPRESS_HANDLING_FEE);
          }
          // because FEDEX_GROUND also is returned for Canadian Addresses, we need to check if the country matches the store country and whether international ground is enabled
-         if ((MODULE_SHIPPING_FEDEX_REST_GROUND == 'true' && $order->delivery['country']['id'] == STORE_COUNTRY) || (MODULE_SHIPPING_FEDEX_REST_GROUND == 'true' && ($order->delivery['country']['id'] != STORE_COUNTRY) && MODULE_SHIPPING_FEDEX_REST_INTERNATIONAL_GROUND == 'true')) {
-            $this->types['FEDEX_GROUND'] = array('icon' => '', 'handling_fee' => ($order->delivery['country']['id'] == STORE_COUNTRY ? MODULE_SHIPPING_FEDEX_REST_HANDLING_FEE : MODULE_SHIPPING_FEDEX_REST_INT_HANDLING_FEE));
-            $this->types['GROUND_HOME_DELIVERY'] = array('icon' => '', 'handling_fee' => ($order->delivery['country']['id'] == STORE_COUNTRY ? MODULE_SHIPPING_FEDEX_REST_HOME_DELIVERY_HANDLING_FEE : MODULE_SHIPPING_FEDEX_REST_INT_HANDLING_FEE));
+         if ((MODULE_SHIPPING_FEDEX_REST_GROUND == 'true' && $order->delivery['country']['id'] ?? STORE_COUNTRY == STORE_COUNTRY) || (MODULE_SHIPPING_FEDEX_REST_GROUND == 'true' && ($order->delivery['country']['id'] ?? STORE_COUNTRY != STORE_COUNTRY) && MODULE_SHIPPING_FEDEX_REST_INTERNATIONAL_GROUND == 'true')) {
+            $this->types['FEDEX_GROUND'] = array('icon' => '', 'handling_fee' => ($order->delivery['country']['id'] ?? STORE_COUNTRY == STORE_COUNTRY ? MODULE_SHIPPING_FEDEX_REST_HANDLING_FEE : MODULE_SHIPPING_FEDEX_REST_INT_HANDLING_FEE));
+            $this->types['GROUND_HOME_DELIVERY'] = array('icon' => '', 'handling_fee' => ($order->delivery['country']['id'] ?? STORE_COUNTRY == STORE_COUNTRY ? MODULE_SHIPPING_FEDEX_REST_HOME_DELIVERY_HANDLING_FEE : MODULE_SHIPPING_FEDEX_REST_INT_HANDLING_FEE));
          }
          if (MODULE_SHIPPING_FEDEX_REST_INTERNATIONAL_GROUND == 'true') {
             $this->types['INTERNATIONAL_GROUND'] = array('icon' => '', 'handling_fee' => MODULE_SHIPPING_FEDEX_REST_INT_HANDLING_FEE);
