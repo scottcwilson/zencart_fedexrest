@@ -138,6 +138,12 @@
                $this->enabled = false;
             }
          }
+        
+         // disable only when entire cart is free shipping
+         if (!zen_get_shipping_enabled($this->code)) {
+             $this->enabled = false;
+         }
+        
          if ($this->enabled === true && $this->getOAuthToken() === false) {
             $this->enabled = false;
          }
